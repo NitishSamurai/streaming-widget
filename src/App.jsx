@@ -1,7 +1,6 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState} from 'react';
 import { motion } from 'framer-motion';
 import './App.css';
-import { useChat } from 'ai/react';
 import { AiOutlineArrowUp } from 'react-icons/ai';
 import ollama from 'ollama/browser';
 
@@ -20,24 +19,20 @@ function chunkString(str) {
 }
 
 function App() {
-  const {  input, handleInputChange } = useChat();
+
+  const [input, setInput]= useState('');
   const [isLoading, setIsLoading]= useState(false);
-  // const messages = [];
   const [messages, setMessages] = useState([]);
-  // useEffect(()=>{
-  //   messages.map((x,i) => {
-  //     console.log(i,x.content);
-  //   })
-  // },messages);
-  // Handle form submission and fetch streaming response from Ollama
+  const handleInputChange =(e) => {
+    setInput(e.target.value);
+  }
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     try {
       setIsLoading(true);
       const message = { role: 'user', content: input }
       const response = await ollama.chat({ model: 'llama3.1', messages: [message], stream: true })
-      console.log("response:"+JSON.stringify(response));
+
       const x = [];
       for await (const part of response) {
         x.push(part.message);
