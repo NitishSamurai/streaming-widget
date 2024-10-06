@@ -118,7 +118,7 @@ function App() {
                   window.open('https://reworkd.ai/', '_blank');
                 }}
               >
-                Made with ❤️ by Reworkd
+                Made with ❤️ by Zyg
               </a>
             </div>
           </motion.div>
